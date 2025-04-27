@@ -93,6 +93,9 @@ void setup()
 
 	auto *configurationService = new ConfigurationServiceClass(*fileService, *context, *settings);
 	configurationService->loadConfiguration();
+	
+	// Synchronize heater percentage value to context for LCD display
+	context->percentagePower = settings->percentagePower;
 
 	auto *scale = new HX711();
 	static auto *scaleTask = new ScaleTaskClass(*context, *scale, *settings);

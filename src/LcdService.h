@@ -23,6 +23,7 @@ private:
 	auto printExtraData(const double temperatures[4]) const -> void;
 	auto printWeight(const double weight) const -> void;
 	auto printFlowRateWeight(double flowRate) const -> void;
+	auto printHeaterValue(int heaterPercentage) const -> void;
 	LiquidCrystal &_lcd;
 	int _tankIndex = 1;
 	int _headIndex = 0;

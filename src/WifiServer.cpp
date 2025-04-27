@@ -277,6 +277,7 @@ void WifiServerClass::configureInputs()
       if (heatingPower <= 100 && heatingPower >= 0)
       {
         _settings.percentagePower = heatingPower;
+        _context.percentagePower = heatingPower;  // Also update the context for LCD display
       }
     }
     if (request->hasParam(_heater2))

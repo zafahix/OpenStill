@@ -43,6 +43,7 @@ public:
     bool scaleOffsetChanged = false;
 
     double flowRate = 0;
+    int percentagePower = 0;
 };
 
 

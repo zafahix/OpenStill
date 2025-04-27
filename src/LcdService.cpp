@@ -91,8 +91,18 @@ void LcdServiceClass::printExtraData(const double temperatures[4]) const
 {
 	printHeadAbv(temperatures[1]);
 	printTankAlcoholLeft(temperatures[2]);
-	printFlowRateWeight(_context.flowRate);
-	printWeight(_context.weight);
+	
+	// Display heater value on the weight line (line 2)
+	// _lcd.setCursor(14, _weightIndex);
+	// _lcd.print("HTR:");
+	// _lcd.printf("%3i", _context.percentagePower);
+	// _lcd.print("%");
+	
+	// Display heater value on the flow rate line (line 3)
+	_lcd.setCursor(14, _flowRateIndex);
+	_lcd.print("HTR:");
+	_lcd.printf("%3i", _context.percentagePower);
+	_lcd.print("%");
 }
 
 void LcdServiceClass::printHeadAbv(float temperature) const
@@ -146,6 +156,14 @@ void LcdServiceClass::printTankAlcoholLeft(float temperature) const
 	{
 		_lcd.print("      ");
 	}
+}
+
+void LcdServiceClass::printHeaterValue(int heaterPercentage) const
+{
+	_lcd.setCursor(14, _weightIndex);
+	_lcd.print("HTR:");
+	_lcd.printf("%3i", heaterPercentage);
+	_lcd.print("%");
 }
 
 void LcdServiceClass::createCustomCharacters() const
