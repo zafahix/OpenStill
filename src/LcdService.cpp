@@ -5,7 +5,7 @@
 
 #define LCD_ROWS 4
 #define LCD_COLUMNS 20
-#define LCD_ADDRESS 0x3F
+#define LCD_ADDRESS 0x27
 
 LiquidCrystalI2C_RS_EN(lcd, LCD_ADDRESS, false)
 
@@ -100,7 +100,7 @@ void LcdServiceClass::printExtraData(const double temperatures[4]) const
 	
 	// Display heater value on the flow rate line (line 3)
 	_lcd.setCursor(14, _flowRateIndex);
-	_lcd.print("HTR:");
+	_lcd.print("Moc:");
 	_lcd.printf("%3i", _context.percentagePower);
 	_lcd.print("%");
 }
