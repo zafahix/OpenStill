@@ -25,36 +25,34 @@ uint32_t NotificationTaskClass::timeOfNextCheck()
 
 void NotificationTaskClass::sendNotification(String title, String message)
 {
-  const char *host = "www.pushsafer.com";
-  const uint16_t port = 443;
-  String path = "/api";
-  Serial.println("Sending notification: " + message);
+    const char *host = "ntfy.sh";
+    const uint16_t port = 443;
+    String path = "/" + String(_settings.pushNotificationCode);
+    Serial.println("Sending notification to ntfy.sh: " + message);
 
-  WiFiClientSecure client;
-  client.setInsecure();
+    WiFiClientSecure client;
+    client.setInsecure();
 
-
-  HTTPClient https;
-
-  if (https.begin(client, host, port, path))
-  {
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    int httpsCode = https.POST("k=" + String(_settings.pushNotificationCode) + "&t=" + title + "&m=" + message + "&d=a&u=http://" + _context.ipAddress);
-
-    if (httpsCode > 0)
+    HTTPClient https;
+    if (https.begin(client, host, port, path))
     {
-      if (httpsCode == HTTP_CODE_OK)
-      {
-        Serial.println(https.getString());
-      }
+        https.addHeader("Title", title);
+        https.addHeader("Content-Type", "text/plain");
+        int httpsCode = https.POST(message);
+        if (httpsCode > 0)
+        {
+            Serial.print("ntfy response code: ");
+            Serial.println(httpsCode);
+            Serial.println(https.getString());
+        }
+        else
+        {
+            Serial.print("failed to POST to ntfy.sh");
+        }
+        https.end();
     }
     else
     {
-      Serial.print("failed to POST");
+        Serial.print("failed to connect to ntfy.sh");
     }
-  }
-  else
-  {
-    Serial.print("failed to connect to server");
-  }
 }
